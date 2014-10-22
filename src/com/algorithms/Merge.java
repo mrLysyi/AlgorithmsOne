@@ -173,8 +173,15 @@ public class Merge {
      * and prints them to standard output in ascending order. 
      */
     public static void main(String[] args) {
-        String[] a = StdIn.readAllStrings();
+    	String[] a = {};
+    	System.out.println("1");
+    	while (!StdIn.hasNextLine()){
+    		 a = StdIn.readAllStrings();
+    	}
+    	System.out.println("2");
         Merge.sort(a);
         show(a);
+        System.out.println("3");
+        System.out.println(a);
     }
 }

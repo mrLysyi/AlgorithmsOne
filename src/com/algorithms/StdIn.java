@@ -195,11 +195,15 @@ public final class StdIn {
         // we could use readAll.trim().split(), but that's not consistent
         // since trim() uses characters 0x00..0x20 as whitespace
         String[] tokens = WHITESPACE_PATTERN.split(readAll());
-        if (tokens.length == 0 || tokens[0].length() > 0)
+        if (tokens.length == 0 || tokens[0].length() > 0){
+        	System.out.println("tokens length");
             return tokens;
+        }
         String[] decapitokens = new String[tokens.length-1];
-        for (int i=0; i < tokens.length-1; i++)
+        for (int i=0; i < tokens.length-1; i++){
             decapitokens[i] = tokens[i+1];
+            System.out.println("decapitokens");
+        }
         return decapitokens;
     }
 

@@ -7,8 +7,7 @@ import com.algorithms.StdOut;
 public class Subset {
 	   public static void main(String[] args){
 		   RandomizedQueue rq = new RandomizedQueue<String>();
-		   int k=0;
-		   k = Integer.parseInt(args[0]);
+		   int   k = Integer.parseInt(args[0]);
 //		   for(int i = 0; i< k; i++){
 //			   String c = StdIn.readString();
 //			   rq.enqueue(c);		  
@@ -23,7 +22,7 @@ public class Subset {
 			   }
 		  
 		   for(int i = 0; i<k; i++){
-			   StdOut.print(iterator.next());
+			   StdOut.println(iterator.next());
 		   }		   
 	   }
 	}

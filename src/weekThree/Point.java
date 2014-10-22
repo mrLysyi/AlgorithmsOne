@@ -23,9 +23,9 @@ public class Point implements Comparable<Point> {
 
 		@Override
 		public int compare(Point o1, Point o2) {
-			double s0 = slopeTo(o1);
-			double s1 = slopeTo(o2);
-			return Double.compare(s0, s1);
+			double s1 = slopeTo(o1);
+			double s2 = slopeTo(o2);
+			return Double.compare(s1, s2);
 
 		}
 	}; // YOUR DEFINITION HERE
@@ -54,15 +54,29 @@ public class Point implements Comparable<Point> {
 
 	// slope between this point and that point
 	public double slopeTo(Point that) {
-		return 0;
+		if (this.y == that.y && this.x == that.x) //treat the slope of a degenerate line segment 
+			return	Double.NEGATIVE_INFINITY;	 //(between a point and itself) as negative infinity.			
+		if (this.y == that.y)
+			return 0.0; //Treat the slope of a horizontal line segment as positive zero;
+		if (this.x == that.x)
+			return Double.POSITIVE_INFINITY;//treat the slope of a vertical line segment as positive infinity
+		Double rezult = ((double)that.y - (double)this.y) / ((double)that.x - (double)this.x);
+		return rezult;
 		/* YOUR CODE HERE */
 	}
 
 	// is this point lexicographically smaller than that one?
 	// comparing y-coordinates and breaking ties by x-coordinates
-	public int compareTo(Point that) {
-		/* YOUR CODE HERE */
-		return 0;
+	public int compareTo(Point that) {	// return -1 if less; 0 -if equals; 1 if bigger
+		/* YOUR CODE HERE */			// y0 < y1 or if y0 = y1 and x0 < x1.
+		int rezult;
+		if (this.y <that.y || (this.y == that.y) && this.x <that.x)
+			rezult = -1;
+		else if (this.y == that.y && this.x == that.x)
+			rezult = 0;
+		else 
+			rezult = 1;
+		return rezult;
 	}
 
 	// return string representation of this point
