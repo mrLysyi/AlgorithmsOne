@@ -24,10 +24,10 @@ public class PointPlotter {
 
 		// read in the input
 //		String filename = args[0];
-		String filename = "/home/hellow/workspaceJava/Algorithms_testFiles/collinear/input56.txt";
+		String filename = "/home/kokoko/workspace/Algorithms_sendfiles/input56.txt";
 		In in = new In(filename);
 		int N = in.readInt();
-		Point[] arr = {};
+		Point[] arr = new Point[100];
 		for (int i = 0; i < N; i++) {
 			int x = in.readInt();
 			int y = in.readInt();

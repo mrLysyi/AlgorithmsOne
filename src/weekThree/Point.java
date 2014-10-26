@@ -19,14 +19,13 @@ import com.algorithms.StdDraw;
 public class Point implements Comparable<Point> {
 
 	// compare points by slope
-	public final Comparator<Point> SLOPE_ORDER = new Comparator<Point>() {
+	public final Comparator <Point> SLOPE_ORDER = new Comparator<Point>() {
 
 		@Override
 		public int compare(Point o1, Point o2) {
 			double s1 = slopeTo(o1);
 			double s2 = slopeTo(o2);
 			return Double.compare(s1, s2);
-
 		}
 	}; // YOUR DEFINITION HERE
 
@@ -34,10 +33,10 @@ public class Point implements Comparable<Point> {
 	private final int y; // y coordinate
 
 	// create the point (x, y)
-	public Point(int x, int y) {
+	public Point( int xx, int yy) {
 		/* DO NOT MODIFY */
-		this.x = x;
-		this.y = y;
+		this.x = xx;
+		this.y = yy;
 	}
 
 	// plot this point to standard drawing
@@ -54,12 +53,18 @@ public class Point implements Comparable<Point> {
 
 	// slope between this point and that point
 	public double slopeTo(Point that) {
-		if (this.y == that.y && this.x == that.x) //treat the slope of a degenerate line segment 
+		if (this.y == that.y && this.x == that.x)
+		 {
 			return	Double.NEGATIVE_INFINITY;	 //(between a point and itself) as negative infinity.			
+		}
 		if (this.y == that.y)
+		 {
 			return 0.0; //Treat the slope of a horizontal line segment as positive zero;
+		}
 		if (this.x == that.x)
+		 {
 			return Double.POSITIVE_INFINITY;//treat the slope of a vertical line segment as positive infinity
+		}
 		Double rezult = ((double)that.y - (double)this.y) / ((double)that.x - (double)this.x);
 		return rezult;
 		/* YOUR CODE HERE */
@@ -67,7 +72,7 @@ public class Point implements Comparable<Point> {
 
 	// is this point lexicographically smaller than that one?
 	// comparing y-coordinates and breaking ties by x-coordinates
-	public int compareTo(Point that) {	// return -1 if less; 0 -if equals; 1 if bigger
+	public int compareTo(Point that) {	// @return -1 if less; 0 -if equals; 1 if bigger
 		/* YOUR CODE HERE */			// y0 < y1 or if y0 = y1 and x0 < x1.
 		int rezult;
 		if (this.y <that.y || (this.y == that.y) && this.x <that.x)
