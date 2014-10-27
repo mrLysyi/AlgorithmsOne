@@ -5,25 +5,24 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.TreeSet;
 
 import com.algorithms.In;
 import com.algorithms.StdDraw;
 import com.algorithms.StdOut;
 
 public class Brute {
-	private static String filename = "/home/hellow/workspaceJava/Algorithms_testFiles/collinear/input8.txt";
+	private static String filename = "/home/kokoko/workspace/Algorithms_sendfiles/Colinear_ex/input300.txt";
 
 	public static void main(String[] args) throws IOException {
+		// read from the input
+//		String filename = args[0];
 		StdDraw.setXscale(0, 32768); // rescale coordinates and turn on
 										// animation mode
 		StdDraw.setYscale(0, 32768);
 		StdDraw.show(0);
 		StdDraw.setPenRadius(0.01); // make the points a bit larger
 
-		// read from the input
-		// String filename = args[0];
+		
 		In in = new In(filename);
 		int N = in.readInt();
 		// int countL = countLines(filename);
@@ -38,13 +37,13 @@ public class Brute {
 			p.draw();
 		}
 		int count = 0;
-		Arrays.sort(parr, 0, N-1);
+		Arrays.sort(parr, 0, N);
 		Point pA, p1 = new Point(0, 0);
 		Point pB, p2 = new Point(0, 0);
 		Point pC, p3 = new Point(0, 0);
 		Point pD, p4 = new Point(0, 0);
 		// Point to = new Point(0, 0);
-		boolean print = false;
+	
 		for (int a = 0; a < countL; a++) {		
 			
 			for (int b = a + 1; b < N; b++) {
@@ -61,44 +60,32 @@ public class Brute {
 									if (pD.slopeTo(pC) == pD.slopeTo(pB))
 //									if (pD.slopeTo(pC)!=pD.slopeTo(parr[d+1]))
 									{
-										p1 = pA;
-										p2 = pB;
-										p3 = pC;
-										p4 = pD;
-										// if (p4.compareTo(pD) != 1){ //p4
-										// < pD
-										// p4 = pD;
-										//
-										// }
-										// StdOut.print( pD+ "\n");
-//										 if (d == countL-1) {
-										p1.drawTo(p4);
+//										p1 = pA;
+//										p2 = pB;
+//										p3 = pC;
+//										p4 = pD;								
+										pA.drawTo(pD);
 										count++;
-										print = true;
-										StdOut.println(p1 + " -> " + p2 + " -> " + p3
-												+ " -> " + p4);
-										print = false;
 										
-//										 p4 = to; // set 0
-//										 }
-
-									}
+										StdOut.println(pA + " -> " + pB + " -> " + pC + " -> " + pD);
+									
+								}
 							}
 						}
 				}
 			}
 		}
 
-		// MY TEST
-		// int count = 0;
-		// for (Point s : parr) {
-		// System.out.println(count + " : " + s.toString());
-		// count++;
-		// }
+//		 MY TEST
+//		 count = 0;
+//		 for (Point s : parr) {
+//		 System.out.println(count + " : " + s.toString());
+//		 count++;
+//		 }
 		StdDraw.show(0);
 		// reset the pen radius
 		StdDraw.setPenRadius();
-		 System.out.println(count);
+//		 System.out.println(count);
 	}
 
 	private static int countLines(String filename) throws IOException {
