@@ -1,7 +1,10 @@
 package weekThree;
+
 //https://class.coursera.org/algs4partI-006/forum/thread?thread_id=858
 //https://class.coursera.org/algs4partI-006/forum/thread?thread_id=760
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.TreeSet;
 
 import com.algorithms.In;
@@ -9,6 +12,7 @@ import com.algorithms.StdDraw;
 
 public class Fast {
 	private static String filename = "/home/kokoko/workspace/Algorithms_sendfiles/Colinear_ex/input56.txt";
+
 	public static void main(String[] args) {
 		// read from the input
 		// String filename = args[0];
@@ -33,7 +37,7 @@ public class Fast {
 			int y = in.readInt();
 			Point p = new Point(x, y);
 			parr[i] = p;
-			 p.draw();
+			p.draw();
 		}
 
 		int count = 0;
@@ -49,15 +53,16 @@ public class Fast {
 		int drawCount = 0;
 
 		double previous, next;
-		for (int a = 0; a < N; a++) { // main upper loop		
-					System.out.println("____________________NEW Iteration____________________________");
+		for (int a = 0; a < N; a++) { // main upper loop
+			System.out
+					.println("____________________NEW Iteration____________________________");
 			count = 0; // Initialize for inner loop
 			previous = 0.0;
 
 			Arrays.sort(parr, 0, N); // Sort
 			p1 = parr[a];
 			Arrays.sort(parr, p1.SLOPE_ORDER);
-//			pSet.clear();
+			// pSet.clear();
 			for (int b = 0; b < N; b++) { // FiLL slope Array
 				if (b == N - 1) {
 					q1 = parr[b];
@@ -75,26 +80,23 @@ public class Fast {
 					pSet.add(parr[b]);
 					count++;
 
-				} 
-				
+				}
+
 				else {
 					if (count >= 2) {
 						p1.drawTo(pSet.last()); // Draw
 						System.out.println(p1);
-//						p1.draw();
+						// p1.draw();
 						drawCount++;
-						
+
 					}
 
 					pSet.clear();
 					count = 0;
 				}
-				
-				
+
 				// slopeArr[b] = null;
 			}
-			
-		
 
 			// for (int d = 0; d < N - 1; d++) { // check
 			//
@@ -137,8 +139,20 @@ public class Fast {
 		// System.out.println(set.toString());
 		// System.out.println(p3.slopeTo(p4));
 		System.out.println("drCount: " + drawCount);
+		HashMap<Double, HashSet<Point>> sss = new HashMap<Double, HashSet<Point>>();
+		
+
+		// I used a nested java collection. HashMap<Double, HashSet<Point>>.
+		// Before any iteration, sort points by it's lexical order. In
+		// iteration, HashMap could judge if a key in it by the complexity O(1).
+		// HashSet could judge if a value in it by the complexity O(1). So every
+		// time you find a line, you need to judge if the first or last point in
+		// the line containted in the HashSet and the slope as the key
+		// containted in HashMap. If both of this are satisfied, add the slope
+		// as the key in HashMap and first and last to HashSet as the value. I
+		// think this is not the most simple way to prevent printing
+		// subsegments.
 
 	}
-
 
 }
