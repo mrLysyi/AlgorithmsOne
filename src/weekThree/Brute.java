@@ -11,7 +11,12 @@ import com.algorithms.StdDraw;
 import com.algorithms.StdOut;
 
 public class Brute {
-	private static String filename = "/home/kokoko/workspace/Algorithms_sendfiles/Colinear_ex/input48.txt";
+
+//	private static String filename = "/home/kokoko/workspace/Algorithms_sendfiles/Colinear_ex/input48.txt";
+
+//	private static String filename = "/home/hellow/workspaceJava/Algorithms_testFiles/collinear/input56.txt";
+	private static String filename = "/home/kokoko/workspace/Algorithms_sendfiles/Colinear_ex/input8.txt";
+
 
 	public static void main(String[] args) throws IOException {
 		// read from the input
@@ -28,7 +33,7 @@ public class Brute {
 		// int countL = countLines(filename);
 		int countL = N;
 
-		Point[] parr = new Point[countL];
+		Point[] parr = new Point[countL];		
 		for (int i = 0; i < N; i++) { // Create array of Points
 			int x = in.readInt();
 			int y = in.readInt();

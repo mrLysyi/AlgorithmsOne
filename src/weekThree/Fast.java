@@ -28,11 +28,11 @@ public class Fast {
 		// return false;
 	}
 
-	private static String filename = "/home/kokoko/workspace/Algorithms_sendfiles/Colinear_ex/input48.txt";
+	private static String filename = "/home/kokoko/workspace/Algorithms_sendfiles/Colinear_ex/input8.txt";
 
 	public static void main(String[] args) {
 		// read from the input
-		// String filename = args[0];
+//		 String filename = args[0];
 		In in = new In(filename);
 
 		StdDraw.setXscale(0, 32768); // rescale coordinates and turn on
@@ -260,5 +260,6 @@ public class Fast {
 		// subsegments.
 
 	}
+
 
 }
