@@ -11,7 +11,7 @@ import com.algorithms.StdDraw;
 import com.algorithms.StdOut;
 
 public class Brute {
-	private static String filename = "/home/kokoko/workspace/Algorithms_sendfiles/Colinear_ex/input300.txt";
+	private static String filename = "/home/kokoko/workspace/Algorithms_sendfiles/Colinear_ex/input48.txt";
 
 	public static void main(String[] args) throws IOException {
 		// read from the input
@@ -85,7 +85,7 @@ public class Brute {
 		StdDraw.show(0);
 		// reset the pen radius
 		StdDraw.setPenRadius();
-//		 System.out.println(count);
+		 System.out.println(count);
 	}
 
 	private static int countLines(String filename) throws IOException {
