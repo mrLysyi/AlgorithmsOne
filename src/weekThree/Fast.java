@@ -28,11 +28,13 @@ public class Fast {
 		// return false;
 	}
 
-	private static String filename = "/home/kokoko/workspace/Algorithms_sendfiles/Colinear_ex/input8.txt";
+	// private static String filename =
+	// "/home/kokoko/workspace/Algorithms_sendfiles/Colinear_ex/input8.txt";
+	private static String filename = "/home/hellow/workspaceJava/Algorithms_testFiles/collinear/inarow.txt";
 
 	public static void main(String[] args) {
 		// read from the input
-//		 String filename = args[0];
+		// String filename = args[0];
 		In in = new In(filename);
 
 		StdDraw.setXscale(0, 32768); // rescale coordinates and turn on
@@ -58,7 +60,7 @@ public class Fast {
 
 		int count = 0;
 		int drawCount = 0;
-		Point p1 = new Point(0, 0);
+		Point p1 = new Point(23445, -234545 );
 		Point p2 = new Point(2341243, -123414);
 		boolean createline = false;
 		// Point pC, p3 = new Point(34560, 60);
@@ -76,7 +78,7 @@ public class Fast {
 
 			Arrays.sort(parr, 0, N); // Sort
 			p1 = parr2[a];
-			Arrays.sort(parr, p1.SLOPE_ORDER);
+			 Arrays.sort(parr, p1.SLOPE_ORDER);
 			// pSet.clear();
 			for (int b = 0; b < N - 1; b += 1) { // FiLL slope Array
 				// Arrays.sort(parr, p1.SLOPE_ORDER);
@@ -159,23 +161,29 @@ public class Fast {
 		// draw and print
 		HashSet<Point> draw = new HashSet<Point>();
 		int drawcount = 0;
-//		System.out.println(hashmap.toString());
-//		System.out.println(hashmap.size());
+		// System.out.println(hashmap.toString());
+		// System.out.println(hashmap.size());
 		TreeSet<Point> prevpSet = new TreeSet<Point>();
 		prevpSet.add(new Point(0, 0));
+		HashMap<Double, TreeSet<Point>> blackList = new HashMap<Double, TreeSet<Point>>();
 		for (Map.Entry<Double, HashSet<Point>> entry : hashmap.entrySet()) { // PRINT
 
 			// DRAW
 
 			TreeSet<Point> pSet = new TreeSet<Point>(entry.getValue());
-//	
-			
-			if (pSet.size() > 3)
-				if (!prevpSet.isEmpty())
-				if ( !prevpSet.last().equals(pSet.last()) || !prevpSet.first().equals(pSet.first())) {			//!(prevpSet.contains(prevpSet.first()) && prevpSet.contains(prevpSet.last()))
+			//
 
+			if (pSet.size() > 3)
+				// if (!prevpSet.isEmpty())
+				if (!blackList.containsValue(pSet))
+				if (!prevpSet.last().equals(pSet.last())
+						&& !prevpSet.first().equals(pSet.first()))
+//					if (!(prevpSet.contains(prevpSet.first())))
+				{  
+																		// &&
+																		// prevpSet.contains(prevpSet.last()))
+					blackList.put((double)drawcount, pSet);
 					prevpSet = pSet;
-				
 
 					pSet.first().drawTo(pSet.last());
 					// System.out.println("lol");
@@ -185,33 +193,33 @@ public class Fast {
 					druck = (pSet.toArray(new Point[pSet.size()]));
 					drawcount++;
 					for (int i = 0; i < pSet.size(); i += 1) { // 4
-						
+
 						if (i == pSet.size() - 1)
-							StdOut.println(druck[i] ); // +" "+entry.getKey()
+							StdOut.println(druck[i]); // +" "+entry.getKey()
 						else
 							StdOut.print(druck[i] + " -> ");
 					}
-					
+
 					// PRINT rezult into Stdout
-//					if (pSet.size() == 4) {
-//						for (int i = 0; i < pSet.size(); i += 1) { // 4
-//							
-//							if (i == pSet.size() - 1)
-//								StdOut.println(druck[i] ); // +" "+entry.getKey()
-//							else
-//								StdOut.print(druck[i] + " -> ");
-//						}
-//					} else {
-//						for (int j = 1; j < pSet.size() - 3; j += 1)
-//							for (int i = j; i < j + 4; i += 1) { // 5-6-7
-//							// System.out.println("alternative!!!!!!!!!!!!");
-//								
-//								if (i == j + 3)
-//									StdOut.println(druck[i] ); // +" "+entry.getKey()
-//								else
-//									StdOut.print(druck[i] + " -> ");
-//							}
-//					}
+					// if (pSet.size() == 4) {
+					// for (int i = 0; i < pSet.size(); i += 1) { // 4
+					//
+					// if (i == pSet.size() - 1)
+					// StdOut.println(druck[i] ); // +" "+entry.getKey()
+					// else
+					// StdOut.print(druck[i] + " -> ");
+					// }
+					// } else {
+					// for (int j = 1; j < pSet.size() - 3; j += 1)
+					// for (int i = j; i < j + 4; i += 1) { // 5-6-7
+					// // System.out.println("alternative!!!!!!!!!!!!");
+					//
+					// if (i == j + 3)
+					// StdOut.println(druck[i] ); // +" "+entry.getKey()
+					// else
+					// StdOut.print(druck[i] + " -> ");
+					// }
+					// }
 
 					prevpSet = pSet;
 				}
@@ -260,6 +268,5 @@ public class Fast {
 		// subsegments.
 
 	}
-
 
 }

@@ -14,13 +14,14 @@ public class Brute {
 
 //	private static String filename = "/home/kokoko/workspace/Algorithms_sendfiles/Colinear_ex/input48.txt";
 
-//	private static String filename = "/home/hellow/workspaceJava/Algorithms_testFiles/collinear/input56.txt";
-	private static String filename = "/home/kokoko/workspace/Algorithms_sendfiles/Colinear_ex/input8.txt";
+	private static String filename = "/home/hellow/workspaceJava/Algorithms_testFiles/collinear/input8.txt";
+//	private static String filename = "/home/kokoko/workspace/Algorithms_sendfiles/Colinear_ex/horizontal5.txt";
 
 
 	public static void main(String[] args) throws IOException {
 		// read from the input
 //		String filename = args[0];
+		In in = new In(filename);
 		StdDraw.setXscale(0, 32768); // rescale coordinates and turn on
 										// animation mode
 		StdDraw.setYscale(0, 32768);
@@ -28,7 +29,7 @@ public class Brute {
 		StdDraw.setPenRadius(0.01); // make the points a bit larger
 
 		
-		In in = new In(filename);
+		
 		int N = in.readInt();
 		// int countL = countLines(filename);
 		int countL = N;
@@ -61,7 +62,7 @@ public class Brute {
 						{	
 							for (int d = c + 1; d < N; d++) {
 								pD = parr[d];
-//								if (pD.slopeTo(pA) == pD.slopeTo(pB))
+								if (pD.slopeTo(pA) == pD.slopeTo(pB))
 									if (pD.slopeTo(pC) == pD.slopeTo(pB))
 //									if (pD.slopeTo(pC)!=pD.slopeTo(parr[d+1]))
 									{
@@ -90,7 +91,7 @@ public class Brute {
 		StdDraw.show(0);
 		// reset the pen radius
 		StdDraw.setPenRadius();
-		 System.out.println(count);
+//		 System.out.println(count);
 	}
 
 	private static int countLines(String filename) throws IOException {
