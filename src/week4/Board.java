@@ -65,6 +65,15 @@ public class Board {
 	public int manhattan() {
 		int curPos, etalonPos;
 		int rezult = 0;
+		for (int i = 0; i < N; i++)
+			for (int j = 0; j < N; j++){
+				curPos = i+j;
+				etalonPos = board[i][j];
+				if (curPos!=etalonPos){ //calculate
+					rez = rez +;
+				}
+				
+			}
 		this.manhattan = rezult;
 		return rezult;
 		// sum of Manhattan distances between blocks and goal
