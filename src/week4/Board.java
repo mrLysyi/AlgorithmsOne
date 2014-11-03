@@ -10,7 +10,7 @@ public class Board {
 	private final int N;
 	private final int[][] etalon;
 	private int moves;
-	private int priority;
+	private int priority; //manhattam+moves
 	private int manhattan;
 	private int hamming = -1;
 
@@ -63,16 +63,20 @@ public class Board {
 	}
 
 	public int manhattan() {
-		int curPos, etalonPos;
+		int curPos, etalonPos,ii,jj;
 		int rezult = 0;
 		for (int i = 0; i < N; i++)
-			for (int j = 0; j < N; j++){
-				curPos = i+j;
+			for (int j = 0; j < N; j++) {
+				curPos = i * N + (j + 1);
 				etalonPos = board[i][j];
-				if (curPos!=etalonPos){ //calculate
-					rez = rez +;
+				if (curPos != etalonPos && etalonPos != 0) { // calculate
+					ii=(board[i][j]-1)/N;
+					jj=board[i][j] -1 -ii*N;
+					rezult = rezult + Math.abs(i-ii) + Math.abs(j-jj);
+
 				}
-				
+				System.out.println("i: " + i + " j: " + j + " rez: " + rezult);
+
 			}
 		this.manhattan = rezult;
 		return rezult;
@@ -83,8 +87,8 @@ public class Board {
 		if (hamming == -1)
 			return hamming() == 0;
 		else
-			return hamming==0;
-					
+			return hamming == 0;
+
 		// is this board the goal board?
 	}
 
@@ -119,14 +123,17 @@ public class Board {
 	}
 
 	public static void main(String[] args) {
-		int N = 2;
-		int[][] test = new int[N][N];
+		int N = 3;
+		// int[][] test = new int[N][N];
 		int count = 1;
-		for (int i = 0; i < N; i++)
-			for (int j = 0; j < N; j++) {
-				test[i][j] = i + j;
-				count++;
-			}
+//		 int[][] test = { { 0, 1, 3 }, { 4, 2, 5 }, { 7, 8, 6 } };
+//		 int[][] test = { { 4, 1, 3 }, { 0, 2, 5 }, { 7, 8, 6 } };
+//		int[][] test = { { 8, 1, 3 }, { 4, 0, 2 }, { 7, 6, 5 } };
+		// for (int i = 0; i < N; i++)
+		// for (int j = 0; j < N; j++) {
+		// test[i][j] = i + j;
+		// count++;
+		// }
 		count = 0;
 		Board br = new Board(test);
 		System.out.println(br.dimension());
@@ -137,5 +144,8 @@ public class Board {
 		System.out.println(br.toString());
 		System.out.println("Hamming (out of goal blocks): " + br.hamming());
 		// unit tests (not graded)
+		System.out.println(br.toString());
+		System.out.println(br.manhattan());
+	
 	}
 }
