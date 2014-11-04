@@ -1,6 +1,9 @@
 package week4;
 
-import com.algorithms.MinPQ;
+//import java.util.Arrays;
+
+//import com.algorithms.MinPQ;
+import com.algorithms.Stack;
 
 public class Board {
 	// private final int[][] initial;
@@ -9,18 +12,13 @@ public class Board {
 	// private final Node initial = new Node();
 	private final int N;
 	private final int[][] etalon;
-	private int moves;
-	private int priority; //manhattam+moves
-	private int manhattan;
-	private int hamming = -1;
-
-	private void setMoves(int m) {
-		this.moves = m;
-	}
-
-	private void setPriority(int p) {
-		this.priority = p;
-	}
+	// private int moves;
+	// private int priority; //manhattam+moves
+	private int manhattan = this.manhattan();
+	private int hamming = this.hamming();
+	private int twinCount = 0;
+	private int io; // position of zero
+	private int jo;
 
 	public Board(int[][] blocks) {
 		board = blocks;
@@ -50,8 +48,8 @@ public class Board {
 		for (int i = 0; i < N; i++)
 			for (int j = 0; j < N; j++)
 				if (board[i][j] != 0) { // except 0
-					System.out.println("etalon: " + etalon[i][j] + " == "
-							+ board[i][j] + " board[i][j]");
+					// System.out.println("etalon: " + etalon[i][j] + " == "
+					// + board[i][j] + " board[i][j]");
 					if (etalon[i][j] != board[i][j]) {
 						count++;
 					}
@@ -63,51 +61,111 @@ public class Board {
 	}
 
 	public int manhattan() {
-		int curPos, etalonPos,ii,jj;
+		int curPos, etalonPos, ii, jj;
 		int rezult = 0;
 		for (int i = 0; i < N; i++)
 			for (int j = 0; j < N; j++) {
 				curPos = i * N + (j + 1);
 				etalonPos = board[i][j];
 				if (curPos != etalonPos && etalonPos != 0) { // calculate
-					ii=(board[i][j]-1)/N;
-					jj=board[i][j] -1 -ii*N;
-					rezult = rezult + Math.abs(i-ii) + Math.abs(j-jj);
+					ii = (board[i][j] - 1) / N;
+					jj = board[i][j] - 1 - ii * N;
+					rezult = rezult + Math.abs(i - ii) + Math.abs(j - jj);
 
 				}
-				System.out.println("i: " + i + " j: " + j + " rez: " + rezult);
+				// System.out.println("i: " + i + " j: " + j + " rez: " +
+				// rezult);
 
 			}
-		this.manhattan = rezult;
+		// this.manhattan = rezult;
 		return rezult;
 		// sum of Manhattan distances between blocks and goal
 	}
 
 	public boolean isGoal() {
-		if (hamming == -1)
-			return hamming() == 0;
-		else
-			return hamming == 0;
+		// if (hamming == -1)
+		// return hamming() == 0;
+		// else
+		return (manhattan == 0 && hamming == 0);
 
 		// is this board the goal board?
 	}
 
+	@Override
+	public boolean equals(Object y) {
+		if (y == this)
+			return true;
+		if (y == null)
+			return false;
+
+		if (y.getClass() != this.getClass()) {
+			// System.out.println(y.getClass() +" = " + this.getClass() +
+			// "111111111111111111111111111111111111111111111111");
+			return false;
+		}
+		Board that = (Board) y;
+		if (this.N != that.N)
+			return false;
+
+		for (int i = 0; i < N; i++)
+			for (int j = 0; j < N; j++) {
+				if (this.board[i][j] != that.board[i][j])
+					return false;
+			}
+		return true;
+		// does this board equal y?
+	}
+
 	public Board twin() {
+
 		int[][] twin = board;
+		// if (this.twinCount > 4)
+		// this.twinCount = 0;
+		int temp;
+		for (int i = 0; i < N; i++)			// create counter, found ii and jj, exchange only one solution at time
+			for (int j = 0; j < N; j++) {
+				if (this.board[i][j] != 0) {
+					if (j<N-1){
+					temp = twin[i][j];
+					twin[i][j] = twin[i][j+1];
+					twin[i][j+1] = temp;
+					}
+					else if (i<N-1){
+						temp = twin[i][j];
+						twin[i][j] = twin[i+1][j];
+						twin[i+1][j] = temp;						
+					}
+				}
+			}
+		// left exchange, right exchange, up, down
+		this.twinCount++;
+
 		return new Board(twin);
 		// a boadr that is obtained by exchanging two adjacent blocks in the
 		// same row
 	}
 
-	public boolean equals(Object y) {
-		return board.equals(y);// does this board equal y?
+	private void getTwinCount() { // delete this
+		// find zero i and j position of zero;
+		for (int i = 0; i < N; i++)
+			for (int j = 0; j < N; j++) {
+				if (board[i][j] == 0) {
+					this.io = i;
+					this.jo = j;
+					break;
+				}
+			}
+
 	}
 
 	public Iterable<Board> neighbors() {
-		return null;
+		Stack<Board> stack = new Stack<Board>();
+		stack.push(this.twin());
+		return stack;
 		// all neighboring boards
 	}
 
+	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append(N + "\n");
@@ -123,29 +181,37 @@ public class Board {
 	}
 
 	public static void main(String[] args) {
-		int N = 3;
+		// int N = 3;
 		// int[][] test = new int[N][N];
-		int count = 1;
-//		 int[][] test = { { 0, 1, 3 }, { 4, 2, 5 }, { 7, 8, 6 } };
-//		 int[][] test = { { 4, 1, 3 }, { 0, 2, 5 }, { 7, 8, 6 } };
-//		int[][] test = { { 8, 1, 3 }, { 4, 0, 2 }, { 7, 6, 5 } };
+		// int count = 1;
+		// count = 0;
+		// int[][] test = { { 0, 1, 3 }, { 4, 2, 5 }, { 7, 8, 6 } };
+		int[][] test2 = { { 4, 1, 3 }, { 0, 2, 5 }, { 7, 8, 6 } };
+		int[][] test = { { 8, 1, 3 }, { 4, 0, 2 }, { 7, 6, 5 } };
 		// for (int i = 0; i < N; i++)
 		// for (int j = 0; j < N; j++) {
 		// test[i][j] = i + j;
 		// count++;
 		// }
-		count = 0;
+
 		Board br = new Board(test);
+		Board br2 = new Board(test2);
+		// Board br2 = br;
 		System.out.println(br.dimension());
 		for (int[] ii : test)
 			for (int jj : ii)
 				System.out.println("element: " + jj);
+
+		// br2 = br.neighbors();
 		System.out.println("toString------------------");
 		System.out.println(br.toString());
 		System.out.println("Hamming (out of goal blocks): " + br.hamming());
 		// unit tests (not graded)
 		System.out.println(br.toString());
 		System.out.println(br.manhattan());
-	
+		System.out.println(br.equals(br2));
+
+		// System.out.println(br.getClass()==br2.getClass());
+
 	}
 }
