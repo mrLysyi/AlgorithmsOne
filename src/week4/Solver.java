@@ -5,25 +5,27 @@ import com.algorithms.StdOut;
 import com.algorithms.MinPQ;
 
 public class Solver {
-private final Board initial;
+	private final Board initial;
 
-// private class Node{
-// Node privious;
-// int[][] board;
-// // int manhattan =
-// //int priority =
-// int moves;
-// Node(){
-//
-// }
-// }
+	private class Node {
+		Node privious;
+		Board board;
+		int manhattan = board.manhattan();
+		int moves ;
+		int priority = moves + manhattan;
 
-// private void setBoard(int[][] in){
-// board = in;
-// }
+		Node(Board board, int m) {
+			this.moves = m;
+			this.board = board;
+		}
+	}
+
+	// private void setBoard(int[][] in){
+	// board = in;
+	// }
 
 	public Solver(Board initial) {
-//		initial
+		// initial
 		this.initial = initial;
 	} // find a solution to the initial board (using the A* algorithm)
 
@@ -41,7 +43,9 @@ private final Board initial;
 	}
 
 	public Iterable<Board> solution() {
-		return null;
+		MinPQ<Board> bb = new MinPQ<Board>();
+		// bb.
+		return bb;
 		// sequence of boards in a shortest solution; null if unsolvable
 	}
 
@@ -51,8 +55,11 @@ private final Board initial;
 		// create initial board from file
 		// In in = new In(args[0]);
 
+		// In in = new
+		// In("/home/hellow/workspaceJava/Algorithms_testFiles/Pazzle/puzzle03.txt");
 		In in = new In(
-				"/home/hellow/workspaceJava/Algorithms_testFiles/Pazzle/puzzle03.txt");
+				"/home/kokoko/workspace/Algorithms_sendfiles/puzzleTestFiles/puzzle03.txt");
+
 		int N = in.readInt();
 		int[][] blocks = new int[N][N];
 		for (int i = 0; i < N; i++)
