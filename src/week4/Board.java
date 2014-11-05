@@ -7,9 +7,10 @@ import com.algorithms.Stack;
 
 public class Board {
 	// private final int[][] initial;
-	private final int[][] board;
+
 	// private MinPQ<Board> pf = new MinPQ<Board>();
 	// private final Node initial = new Node();
+	private final int[][] board;
 	private final int N;
 	private final int[][] etalon;
 	// private int moves;
@@ -19,9 +20,10 @@ public class Board {
 	private int twinCount = 0;
 	private int io; // position of zero
 	private int jo;
+	private boolean twinStart = false;
 
 	public Board(int[][] blocks) {
-		board = blocks;
+		this.board = blocks;
 		// initial.privious = null;
 		// initial.moves =0;
 		this.N = blocks.length;
@@ -71,13 +73,8 @@ public class Board {
 					ii = (board[i][j] - 1) / N;
 					jj = board[i][j] - 1 - ii * N;
 					rezult = rezult + Math.abs(i - ii) + Math.abs(j - jj);
-
 				}
-				// System.out.println("i: " + i + " j: " + j + " rez: " +
-				// rezult);
-
 			}
-		// this.manhattan = rezult;
 		return rezult;
 		// sum of Manhattan distances between blocks and goal
 	}
@@ -117,45 +114,46 @@ public class Board {
 	}
 
 	public Board twin() {
+		if(!twinStart){
+			int[] swapArr = new int[N*N-N];
+			this.twinStart = true;
+		}
+//		for (int i = 0; i < N; i++)
+//			for (int j = 0; j < N; j++) {
+				// if ((j < N - 1) && this.board[i][j] != 0 && this.board[i][j +
+				// 1] != 0
+				// && this.twinCount == i * (N) + j )
+				return swapRight(3);
+//			}
+//		return this;
+	} // a boadr that is obtained by exchanging two adjacent blocks in the
 
-		int[][] twin = board;
-		// if (this.twinCount > 4)
-		// this.twinCount = 0;
-		int temp;
-		for (int i = 0; i < N; i++)			// create counter, found ii and jj, exchange only one solution at time
-			for (int j = 0; j < N; j++) {
-				if (this.board[i][j] != 0) {
-					if (j<N-1){
-					temp = twin[i][j];
-					twin[i][j] = twin[i][j+1];
-					twin[i][j+1] = temp;
-					}
-					else if (i<N-1){
-						temp = twin[i][j];
-						twin[i][j] = twin[i+1][j];
-						twin[i+1][j] = temp;						
-					}
-				}
-			}
-		// left exchange, right exchange, up, down
-		this.twinCount++;
+	// same row
 
-		return new Board(twin);
-		// a boadr that is obtained by exchanging two adjacent blocks in the
-		// same row
-	}
-
-	private void getTwinCount() { // delete this
-		// find zero i and j position of zero;
-		for (int i = 0; i < N; i++)
-			for (int j = 0; j < N; j++) {
-				if (board[i][j] == 0) {
-					this.io = i;
-					this.jo = j;
-					break;
-				}
-			}
-
+	// private void getTwinCount() { // delete this
+	// // find zero i and j position of zero;
+	// for (int i = 0; i < N; i++)
+	// for (int j = 0; j < N; j++) {
+	// if (board[i][j] == 0) {
+	// this.io = i;
+	// this.jo = j;
+	// break;
+	// }
+	// }
+	// }
+	private Board swapRight(int position) {
+		int i = position/N;
+		int j = position - i*N;
+		System.out.println("position i: "+i + " position j: "+j);
+		int[][] temp = new int[N][N];
+		arrayCopy(board, temp);
+		int first = temp[i][j];
+		int second = temp[i][j + 1];
+		System.out.println("f: " + first + " s: " + second);
+		temp[i][j] = second;
+		temp[i][j + 1] = first;
+		this.twinCount += 1;
+		return new Board(temp);
 	}
 
 	public Iterable<Board> neighbors() {
@@ -180,6 +178,16 @@ public class Board {
 		// below)
 	}
 
+	private int[][] arrayCopy(int[][] a, int[][] b) {
+		for (int i = 0; i < a.length; i++) {
+			for (int j = 0; j < a.length; j++) {
+				b[i][j] = a[i][j];
+			}
+
+		}
+		return b;
+	}
+
 	public static void main(String[] args) {
 		// int N = 3;
 		// int[][] test = new int[N][N];
@@ -194,22 +202,31 @@ public class Board {
 		// count++;
 		// }
 
-		Board br = new Board(test);
+		final Board br = new Board(test);
 		Board br2 = new Board(test2);
 		// Board br2 = br;
-		System.out.println(br.dimension());
-		for (int[] ii : test)
-			for (int jj : ii)
-				System.out.println("element: " + jj);
+		// System.out.println(br.dimension());
+		// for (int[] ii : test)
+		// for (int jj : ii)
+		// System.out.println("element: " + jj);
 
 		// br2 = br.neighbors();
+
+		System.out.println(br.toString());
 		System.out.println("toString------------------");
-		System.out.println(br.toString());
-		System.out.println("Hamming (out of goal blocks): " + br.hamming());
-		// unit tests (not graded)
-		System.out.println(br.toString());
-		System.out.println(br.manhattan());
-		System.out.println(br.equals(br2));
+		// System.out.println("Hamming (out of goal blocks): " + br.hamming());
+		// // unit tests (not graded)
+		// System.out.println(br.toString());
+		// System.out.println(br.manhattan());
+		// System.out.println(br.equals(br2));
+		for (int i = 0; i < 4; i++)
+			// br2 = br.twin();
+			System.out.println(br.twin().toString());
+		System.out.println("end");
+		// br2.twin();
+		// br2 = br.twin();
+		// System.out.println("toasaString: " + br.toString());
+		// System.out.println(br.twin().toString());
 
 		// System.out.println(br.getClass()==br2.getClass());
 
