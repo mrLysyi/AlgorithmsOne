@@ -21,6 +21,7 @@ public class Board {
 	private int io; // position of zero
 	private int jo;
 	private boolean twinStart = false;
+	private int swapArr[];
 
 	public Board(int[][] blocks) {
 		this.board = blocks;
@@ -114,8 +115,8 @@ public class Board {
 	}
 
 	public Board twin() {
-		if(!twinStart){
-			int[] swapArr = new int[N*N-N];
+		if(swapArr[0]==-1){
+//			int[] swapArr = new int[N*N-N];
 			this.twinStart = true;
 		}
 //		for (int i = 0; i < N; i++)
