@@ -95,9 +95,9 @@ public class Solver {
 		// In in = new In(args[0]);
 
 		In in = new In(
-				"/home/hellow/workspaceJava/Algorithms_testFiles/Pazzle/puzzle03.txt");
+//				"/home/hellow/workspaceJava/Algorithms_testFiles/Pazzle/puzzle03.txt");
 		// In in = new In(
-		// "/home/kokoko/workspace/Algorithms_sendfiles/puzzleTestFiles/puzzle03.txt");
+		 "/home/kokoko/workspace/Algorithms_sendfiles/puzzleTestFiles/puzzle03.txt");
 
 		int N = in.readInt();
 		int[][] blocks = new int[N][N];
@@ -107,16 +107,20 @@ public class Solver {
 		Board initial = new Board(blocks);
 
 		// solve the puzzle
-		Solver solver = new Solver(initial);
-
-		// print solution to standard output
-		if (!solver.isSolvable())
-			StdOut.println("No solution possible");
-		else {
-			StdOut.println("Minimum number of moves = " + solver.moves());
-			for (Board board : solver.solution())
-				StdOut.println(board);
-		}
+//		Solver solver = new Solver(initial);
+//
+//		// print solution to standard output
+//		if (!solver.isSolvable())
+//			StdOut.println("No solution possible");
+//		else {
+//			StdOut.println("Minimum number of moves = " + solver.moves());
+//			for (Board board : solver.solution())
+//				StdOut.println(board);					
+//		}
+//		--------------------------------
+		System.out.println("original " + initial.toString());
+		System.out.println(initial.neighbors().toString());
+		
 	}
 
 }
