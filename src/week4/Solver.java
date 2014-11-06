@@ -1,5 +1,7 @@
 package week4;
 
+import java.util.Iterator;
+
 import com.algorithms.In;
 import com.algorithms.StdOut;
 import com.algorithms.MinPQ;
@@ -7,26 +9,63 @@ import com.algorithms.MinPQ;
 public class Solver {
 	private final Board initial;
 
-	private class Node {
-		Node privious;
-		Board board;
-		int manhattan = board.manhattan();
-		int moves ;
-		int priority = moves + manhattan;
+	private class Node implements Comparable<Node> {
+		private Node privious;
+		private Board board;
+		private int manhattan;
+		private int moves;
+		private int priority = moves + manhattan;
 
 		Node(Board board, int m) {
 			this.moves = m;
 			this.board = board;
+			this.manhattan = board.manhattan();
+		}
+
+		@Override
+		public int compareTo(Node that) {
+			int rezult;
+			if (this.priority < that.priority)
+				rezult = -1;
+			else if (this.priority == that.priority)
+				rezult = 0;
+			else
+				// >
+				rezult = 1;
+			return rezult;
 		}
 	}
 
-	// private void setBoard(int[][] in){
-	// board = in;
-	// }
-
 	public Solver(Board initial) {
-		// initial
 		this.initial = initial;
+		Node firstNode = new Node(initial, 0); // initial
+		firstNode.privious = null;
+		MinPQ<Node> pq = new MinPQ<Node>();
+		pq.insert(firstNode);
+		Node current = firstNode;
+		int movesCount = 1;
+		Board previous = firstNode.board;
+		while (!current.board.isGoal()) {
+			current = pq.delMin(); // del minimum
+
+			Iterator<Board> iterator = current.board.neighbors().iterator();
+			System.out.println(iterator.next().toString());
+			while (iterator.hasNext()) {
+				
+				Node in = new Node(iterator.next(), movesCount).privious = current;
+//				System.out.println(in.board.toString());
+				if (previous.equals(in.board))	{		// critical optimization
+					pq.insert(in); // add
+//				System.out.println(in.board.toString());
+				}
+									// neighbours;
+			}
+			previous = current.board;
+			// current.board.neighbors();
+			movesCount++;
+			// current = pq.
+		}
+		// this.initial.
 	} // find a solution to the initial board (using the A* algorithm)
 
 	public boolean isSolvable() {
@@ -55,10 +94,10 @@ public class Solver {
 		// create initial board from file
 		// In in = new In(args[0]);
 
-		// In in = new
-		// In("/home/hellow/workspaceJava/Algorithms_testFiles/Pazzle/puzzle03.txt");
 		In in = new In(
-				"/home/kokoko/workspace/Algorithms_sendfiles/puzzleTestFiles/puzzle03.txt");
+				"/home/hellow/workspaceJava/Algorithms_testFiles/Pazzle/puzzle03.txt");
+		// In in = new In(
+		// "/home/kokoko/workspace/Algorithms_sendfiles/puzzleTestFiles/puzzle03.txt");
 
 		int N = in.readInt();
 		int[][] blocks = new int[N][N];
