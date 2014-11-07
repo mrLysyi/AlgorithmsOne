@@ -12,13 +12,13 @@ public class Board {
 
 	// private MinPQ<Board> pf = new MinPQ<Board>();
 	// private final Node initial = new Node();
-	private  short[][] board;
+	private short[][] board;
 	private final int N;
-	private final short[][] etalon;
+	// private final short[][] etalon;
 	// private int moves;
 	// private int priority; //manhattam+moves
-//	private final int manhattan = this.manhattan();
-//	private final int hamming = this.hamming();
+	// private final int manhattan = this.manhattan();
+	// private final int hamming = this.hamming();
 	// private int twinCount = 0;
 	// private int io; // position of zero
 	// private int jo;
@@ -27,20 +27,20 @@ public class Board {
 	// private Stack<Board> neibors = new Stack<Board>();
 
 	public Board(int[][] blocks) {
-//		this.board = blocks;
+		// this.board = blocks;
 		// initial.privious = null;
 		// initial.moves =0;
 		this.N = blocks.length;
 		board = new short[N][N];
 		int count = 1;
-		etalon = new short[N][N];
+		// etalon = new short[N][N];
 		for (int i = 0; i < N; i++)
 			for (int j = 0; j < N; j++) {
-				this.board[i][j] = (short)blocks[i][j];
-				this.etalon[i][j] = (short)count;
+				this.board[i][j] = (short) blocks[i][j];
+				// this.etalon[i][j] = (short)count;
 				count++;
 			}
-		this.etalon[N - 1][N - 1] = 0;
+		// this.etalon[N - 1][N - 1] = 0;
 
 	} // construct a board from an N-by-N array of blocks
 		// (where blocks[i][j] = block in row i, column j)
@@ -52,16 +52,22 @@ public class Board {
 	public int hamming() {
 		// int h = Node.
 		int count = 0;
+		int etalonCount = 0;
 		for (int i = 0; i < N; i++)
-			for (int j = 0; j < N; j++)
+			for (int j = 0; j < N; j++) {
+				etalonCount++;
 				if (board[i][j] != 0) { // except 0
 					// System.out.println("etalon: " + etalon[i][j] + " == "
 					// + board[i][j] + " board[i][j]");
-					if (etalon[i][j] != board[i][j]) {
+					// if (etalon[i][j] != board[i][j]) {
+//					if(i!=N-1 && j!=N-1)
+					if (etalonCount != board[i][j]) {
 						count++;
 					}
-
+//					else if (board[i][j] != 0)
+//						count++;
 				}
+			}
 		// this.hamming = count;
 		return count;
 		// number of blocks out of place
@@ -88,7 +94,7 @@ public class Board {
 		// if (hamming == -1)
 		// return hamming() == 0;
 		// else
-		return (manhattan() == 0 && hamming() == 0 && board[N-1][N-1]==0 );
+		return (manhattan() == 0 && hamming() == 0 && board[N - 1][N - 1] == 0);
 
 		// is this board the goal board?
 	}
@@ -127,15 +133,15 @@ public class Board {
 							twinStack.push(i * N + j);
 				}
 		}
-//		 System.out.println("tttttttStack "+twinStack.toString());
-//		return swap(twinStack.pop(), 'r');
+		// System.out.println("tttttttStack "+twinStack.toString());
+		// return swap(twinStack.pop(), 'r');
 		int number = 0;
-		if(board[0][0]!=0 && board[0][1]!=0 )
+		if (board[0][0] != 0 && board[0][1] != 0)
 			number = 0;
 		else
 			number = N;
 		return swap(number, 'r');
-		
+
 	} // a boadr that is obtained by exchanging two adjacent blocks in the
 		// same row
 
@@ -247,19 +253,20 @@ public class Board {
 		// int[][] test = new int[N][N];
 		// int count = 1;
 		// count = 0;
-//		 int[][] test = { { 0, 1, 3 }, { 4, 2, 5 }, { 7, 8, 6 } };
+		// int[][] test = { { 0, 1, 3 }, { 4, 2, 5 }, { 7, 8, 6 } };
+		 int[][] test22 = { { 3, 1 }, { 0, 2} };
 		int[][] test2 = { { 4, 1, 3 }, { 2, 0, 5 }, { 7, 8, 6 } };
-//		int[][] test = { { 8, 1, 3 }, { 4, 0, 2 }, { 7, 6, 5 } };
-//		int[][] etalonT = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 0 } };
+		// int[][] test = { { 8, 1, 3 }, { 4, 0, 2 }, { 7, 6, 5 } };
+		// int[][] etalonT = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 0 } };
 		// for (int i = 0; i < N; i++)
 		// for (int j = 0; j < N; j++) {
 		// test[i][j] = i + j;
 		// count++;
 		// }
 
-//		final Board br = new Board(test);
-		Board br2 = new Board(test2);
-//		Board br3 = new Board(etalonT);
+		// final Board br = new Board(test);
+		Board br2 = new Board(test22);
+		// Board br3 = new Board(etalonT);
 		// Board br2 = br;
 		// System.out.println(br.dimension());
 		// for (int[] ii : test)
@@ -272,7 +279,7 @@ public class Board {
 		System.out.println("toString------------------");
 		// System.out.println("Hamming (out of goal blocks): " + br.hamming());
 		// // unit tests (not graded)
-//		 System.out.println(br.toString());
+		// System.out.println(br.toString());
 		// System.out.println(br.manhattan());
 		// System.out.println(br.equals(br2));
 
@@ -289,17 +296,17 @@ public class Board {
 		// System.out.println(br.getClass()==br2.getClass());
 		// Stack<Board> temp = br.neighbors();
 
-		 Iterator<Board> iterator = br2.neighbors().iterator();
-		 while(iterator.hasNext()){
-		 // System.out.println(iterator.toString());
-		 System.out.println(iterator.next().toString());
-		 }
-//		System.out.println(br.isGoal());
-////		for (int i = 0; i < br3.dimension(); i++)
-////			for (int j = 0; j < br3.dimension(); j++) {
-////				System.out.println(br3.etalon[i][j] + " ");
-////			}
-//		System.out.println(br.hamming());
+		Iterator<Board> iterator = br2.neighbors().iterator();
+		while (iterator.hasNext()) {
+			// System.out.println(iterator.toString());
+			System.out.println(iterator.next().toString());
+		}
+		// System.out.println(br.isGoal());
+		// // for (int i = 0; i < br3.dimension(); i++)
+		// // for (int j = 0; j < br3.dimension(); j++) {
+		// // System.out.println(br3.etalon[i][j] + " ");
+		// // }
+		 System.out.println("br2 hamming: "+br2.hamming());
 
 	}
 }

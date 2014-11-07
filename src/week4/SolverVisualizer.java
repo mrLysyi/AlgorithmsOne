@@ -27,9 +27,9 @@ import com.algorithms.StdOut;
 public class SolverVisualizer {
 
     // time in milliseconds to animate each move of the solution
-    private static final int ANIMATE_TIME = 800;
+    private static final int ANIMATE_TIME = 80;
     // time in milliseconds to pause after each move
-    private static final int PAUSE_TIME = 300;
+    private static final int PAUSE_TIME = 30;
     // time in milliseconds for each frame of animation. 20 is sensible
     private static final int FRAME_TIME = 20;
     
@@ -113,7 +113,7 @@ public class SolverVisualizer {
             // read in the board specified in the filename
             
 //        	In in = new In(filename);
-            In in = new In("/home/hellow/workspaceJava/Algorithms_testFiles/Pazzle/puzzle03.txt");
+            In in = new In("/home/hellow/workspaceJava/Algorithms_testFiles/Pazzle/puzzle17.txt");
             N = in.readInt();
             tileAt = new int[N][N];
             for (int i = 0; i < N; i++) {
