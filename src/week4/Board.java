@@ -14,15 +14,12 @@ public class Board {
 	// private final Node initial = new Node();
 	private short[][] board;
 	private final int N;
-	// private final short[][] etalon;
-	// private int moves;
-	// private int priority; //manhattam+moves
-	// private final int manhattan = this.manhattan();
+	 private  int manhattan = -1;
 	// private final int hamming = this.hamming();
 	// private int twinCount = 0;
-	// private int io; // position of zero
-	// private int jo;
-	private Stack<Integer> twinStack = new Stack<Integer>();
+	 private int io; // position of zero
+	 private int jo;
+//	private Stack<Integer> twinStack = new Stack<Integer>();
 
 	// private Stack<Board> neibors = new Stack<Board>();
 
@@ -38,8 +35,13 @@ public class Board {
 			for (int j = 0; j < N; j++) {
 				this.board[i][j] = (short) blocks[i][j];
 				// this.etalon[i][j] = (short)count;
+				if (board[i][j]==0){
+					this.io=i;
+					this.jo=j;
+				}
 				count++;
 			}
+		manhattan = this.manhattan();
 		// this.etalon[N - 1][N - 1] = 0;
 
 	} // construct a board from an N-by-N array of blocks
@@ -74,6 +76,8 @@ public class Board {
 	}
 
 	public int manhattan() {
+		if (this.manhattan != -1)
+			return manhattan ;
 		int curPos, etalonPos, ii, jj;
 		int rezult = 0;
 		for (int i = 0; i < N; i++)
@@ -91,6 +95,8 @@ public class Board {
 	}
 
 	public boolean isGoal() {
+		if (board[N - 1][N - 1] != 0)
+			return false;
 		// if (hamming == -1)
 		// return hamming() == 0;
 		// else
@@ -101,8 +107,7 @@ public class Board {
 
 	@Override
 	public boolean equals(Object y) {
-		if (y == this)
-			return true;
+		
 		if (y == null)
 			return false;
 
@@ -114,25 +119,29 @@ public class Board {
 		Board that = (Board) y;
 		if (this.N != that.N)
 			return false;
+		if (this.io != that.io || this.jo != that.jo)
+			return false;
 
 		for (int i = 0; i < N; i++)
 			for (int j = 0; j < N; j++) {
 				if (this.board[i][j] != that.board[i][j])
 					return false;
 			}
+		if (y == this)
+			return true;
 		return true;
 		// does this board equal y?
 	}
 
 	public Board twin() {
-		if (twinStack.isEmpty()) {
-			for (int i = 0; i < N; i++)
-				for (int j = 0; j < N; j++) {
-					if (j < N - 1)
-						if (board[i][j] != 0 && board[i][j + 1] != 0)
-							twinStack.push(i * N + j);
-				}
-		}
+//		if (twinStack.isEmpty()) {
+//			for (int i = 0; i < N; i++)
+//				for (int j = 0; j < N; j++) {
+//					if (j < N - 1)
+//						if (board[i][j] != 0 && board[i][j + 1] != 0)
+//							twinStack.push(i * N + j);
+//				}
+//		}
 		// System.out.println("tttttttStack "+twinStack.toString());
 		// return swap(twinStack.pop(), 'r');
 		int number = 0;
@@ -196,17 +205,17 @@ public class Board {
 	}
 
 	public Iterable<Board> neighbors() {
-		int io = 0;
-		int jo = 0;
-		for (int i = 0; i < N; i++)
-			// find zero coordinats
-			for (int j = 0; j < N; j++) {
-				if (board[i][j] == 0) {
-					io = i;
-					jo = j;
-					break;
-				}
-			}
+//		int io = 0;
+//		int jo = 0;
+//		for (int i = 0; i < N; i++)
+//			// find zero coordinats
+//			for (int j = 0; j < N; j++) {
+//				if (board[i][j] == 0) {
+//					io = i;
+//					jo = j;
+//					break;
+//				}
+//			}
 		// System.out.println("zero position" + io+" - i, j -"+ jo);
 		Stack<Board> stack = new Stack<Board>();
 		int position = io * N + jo;
