@@ -112,8 +112,8 @@ public class SolverVisualizer {
 
             // read in the board specified in the filename
             
-        	In in = new In(filename);
-//            In in = new In("/home/hellow/workspaceJava/Algorithms_testFiles/Pazzle/puzzle17.txt");
+//        	In in = new In(filename);
+            In in = new In("/home/hellow/workspaceJava/Algorithms_testFiles/Pazzle/puzzle44.txt");
             N = in.readInt();
             tileAt = new int[N][N];
             for (int i = 0; i < N; i++) {

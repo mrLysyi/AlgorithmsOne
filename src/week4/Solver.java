@@ -16,20 +16,20 @@ import com.algorithms.StdOut;
 public class Solver {
 	private final Board initial;
 	private boolean isSolvable = false;
-	private Node rezultNode;
+	private Node rezultNode = null;
 	private int movescount;
 	// private Stack<Board> bb = new Stack<Board>();
 //	private Map<Integer, Integer> hashMap = new HashMap<Integer, Integer>();
 //	private Map<Integer, Integer> hammingHashMap = new HashMap<Integer, Integer>();
 //	private Map<Integer, Board> BoardMap = new HashMap<Integer, Board>();
-	private Set<Board> closedSet = new HashSet<Board>();
-	private Set<Board> NodeSet = new HashSet<Board>();
+//	private Set<Board> closedSet = new HashSet<Board>();
+//	private Set<Board> NodeSet = new HashSet<Board>();
 //	private Map<Integer, Board> containsBoardMap = new HashMap<Integer,Board>();
 
 	private class Node implements Comparable<Node> {
 		private Node priviousNode = null;
 		 private Board board;
-		private Integer boardHash;
+//		private Integer boardHash;
 		private Integer manhattan;
 //		private Integer hamming;
 		private int moves;
@@ -40,31 +40,6 @@ public class Solver {
 			this.board = board;
 			this.manhattan = board.manhattan();
 			 this.priority = m + manhattan ;
-			// this.board = board;
-//			this.boardHash = board.hashCode(); // board into hashcode
-//			if (!BoardMap.containsKey(boardHash))
-//				BoardMap.put(boardHash, board);
-//
-//			 if (!hashMap.containsKey(boardHash)) { // manhman into Hash
-//			 // Table
-//			 this.manhattan = this.getBoard().manhattan();
-//			 hashMap.put(boardHash, manhattan);
-//			 } else {
-//			 this.manhattan = (Integer) hashMap.get(boardHash);
-//			
-//			 }
-			
-//			if (!hammingHashMap.containsKey(boardHash)) { // manhman into Hash Table
-//				this.hamming = this.getBoard().hamming();
-//				hashMap.put(boardHash, hamming);
-//			} else {
-//				this.manhattan = (Integer) hashMap.get(boardHash);
-//
-//			}
-//			this.priority = moves + hamming;
-			// int hamman = (Integer) BoardMap.get(boardHash).hamming();
-			// this.priority = moves + hamman ;
-
 		}
 
 		private Board getBoard() {
@@ -115,100 +90,89 @@ public class Solver {
 		firstNodeTwin.priviousNode = null;
 		MinPQ<Node> pq = new MinPQ<Node>();
 		MinPQ<Node> pqTwin = new MinPQ<Node>();
-//		closedSet.add(firstNode.getBoard());
 		pq.insert(firstNode);
 		pqTwin.insert(firstNodeTwin);
-
-		Node current = firstNode;
-		
-		Node twin = firstNodeTwin;
-		int movesCount = 0;
+		Node current = firstNode;		
+		Node twin = firstNodeTwin;		
 		Node priviousSearchNode = firstNode;
+		Node priviousSearchNodeTwin  = firstNodeTwin;
+		int movesCount = 0;
 		int insertCount =0;
 		while (!pq.isEmpty()) { // || !isGoalTwin
 			current = pq.delMin(); // del minimum
-//			closedSet.add(current.getBoard());
-//			twin = pqTwin.delMin();
+			twin = pqTwin.delMin();
 			movesCount++;
+			if (current.manhattan == 0){	// if initial puzzle is already solved
+				this.rezultNode =current;
+				isSolvable = true;
+				return;
+			}
+			
+			if (twin.manhattan == 1){					
+				isSolvable = false;
+				return;					
+			}	
+			
 			if (current.manhattan == 1){
 				Iterator<Board> iterator2 = current.getBoard().neighbors()
 						.iterator();
 				while (iterator2.hasNext()) {
-					Node in2 = new Node(iterator2.next(), movesCount);
-					if(in2.manhattan==0)
-//						System.out.println("WIN");
-					in2.priviousNode = current.priviousNode;
-						rezultNode = in2;
+					Board temp2 = iterator2.next();
+					Node in2 = new Node(temp2, current.moves+1);
+					if(in2.manhattan==0){
+					in2.priviousNode = current;	//					if (rezultNode==null)
+						this.rezultNode = in2;
 						isSolvable = true;
 						return;
-				}
-			}
-//			if (current.manhattan == 0 ){
-//				rezultNode = current;
-//				isSolvable = true;
-//				System.out.println(movesCount);
-//				System.out.println(insertCount+" inCount");
-//				return;
-//			} else if (twin.manhattan == 0) {
-//				isSolvable = false;
-//				return;
-//			} 
-			if (current.manhattan == 1 || current.manhattan == 1)
-				System.out.println(movesCount);
-				//			else if(current.board.hamming() == 1 && current.manhattan == 2){
-//				isSolvable = false;
-//				return;
-//			}
-			// prcount = current.priority + 1;
-		
+						}					 
+					 }
+			}		
+			
 			Iterator<Board> iterator = current.getBoard().neighbors()
-						.iterator();
-			
-//			Iterator<Board> iteratorTwin = twin.getBoard().neighbors()
-//					.iterator();
-			// System.out.println(iterator.next().toString());
-			
+						.iterator();		
+						
 			while (iterator.hasNext()) {
-				Node in = new Node(iterator.next(), movesCount);	
-				in.priviousNode = current; 
-				
-				if (in.manhattan == 1 ){
-					Iterator<Board> iterator2 = in.getBoard().neighbors()
-							.iterator();
-					while (iterator2.hasNext()) {
-						Node in2 = new Node(iterator2.next(), movesCount);
-						if(in2.manhattan==0)
-//							System.out.println("WIN");
-						in2.priviousNode = in;
-							rezultNode = in2;
-							isSolvable = true;
-							return;
-					}
-					System.out.println("neigbours " + movesCount);
-					System.out.println(insertCount+" insertion Count");	
-				}
-				
-//				if (closedSet.contains(in.getBoard()))
-//					continue;
-				
-				if (movesCount <=current.getBoard().dimension()-2) {	
+				Board temp = iterator.next();//				
+				Node in = new Node(temp, current.moves+1);	
+				in.priviousNode = current; 				
+			
+				if (movesCount <= current.getBoard().dimension()-1) {	//current.getBoard().dimension()-2 //3
 					insertCount++;
 					pq.insert(in);
-//					closedSet.add(in.getBoard());
-				} else if (!in.getBoard().equals(current.priviousNode.getBoard())&&!in.getBoard().equals(priviousSearchNode.getBoard()) && in.manhattan <= 1+priviousSearchNode.manhattan)   { // && in.compareTo(current.priviousNode)<1  && in.manhattan <= 1+priviousSearchNode.manhattan
-					pq.insert(in);
-					insertCount++;
-//					closedSet.add(in.getBoard());			
-				}
 
+				} else if (!in.getBoard().equals(current.priviousNode.getBoard())&&
+						   !in.getBoard().equals(priviousSearchNode.getBoard()) 
+						  )   { //  && in.manhattan <= current.getBoard().dimension()+priviousSearchNode.manhattan						
+					pq.insert(in);
+					insertCount++;		
+				}
 			}
 			if (movesCount >1)
 				priviousSearchNode = current.priviousNode; //currentBoard.previousBoard.previousBoard
-//			else
-//				priviousSearchNode = current;
-		}
+			
+		Iterator<Board> iteratorTwin = twin.getBoard().neighbors()	//TWIN__TWIN
+				.iterator();
 		
-
+		while (iteratorTwin.hasNext()) {					
+			Node inT = new Node(iteratorTwin.next(), twin.moves+1);	
+			inT.priviousNode = twin; 				
+//		
+			if (movesCount <= twin.getBoard().dimension()-1) {	//current.getBoard().dimension()-2 //3
+////				insertCount++;
+				pqTwin.insert(inT);
+//
+			} else if (!inT.getBoard().equals(twin.priviousNode.getBoard())&&
+					   !inT.getBoard().equals(priviousSearchNodeTwin.getBoard()) 
+					  )   { //  && in.manhattan <= current.getBoard().dimension()+priviousSearchNode.manhattan						
+				pqTwin.insert(inT);
+//				insertCount++;		
+			}
+		}
+		if (movesCount >1)
+			priviousSearchNodeTwin = twin.priviousNode; //currentBoard.previousBoard.previousBoard
+		
+		}	
+		
 	} // find a solution to the initial board (using the A* algorithm)
 
 	public boolean isSolvable() {
@@ -222,7 +186,7 @@ public class Solver {
 		if (!isSolvable())
 			return -1;
 		else
-			return movescount;
+			return rezultNode.moves;
 		// min number of moves to solve initial board; -1 if unsolvable
 	}
 
@@ -231,15 +195,15 @@ public class Solver {
 			return null;
 		}
 		Stack<Board> bb = new Stack<Board>();
-
-		Node current = rezultNode;
+		Node current = null;
+		current = rezultNode;
 		int movescount = 0;
 		while (current.priviousNode != null) {
 			bb.push(current.getBoard());
 			current = current.priviousNode;
 			movescount++;
 		}
-		this.movescount = movescount;
+//		this.movescount = movescount;
 		bb.push(initial);
 		
 		return bb;
@@ -248,14 +212,12 @@ public class Solver {
 
 	public static void main(String[] args) { // solve a slider puzzle (given
 												// below)
-
 		// create initial board from file
 		// In in = new In(args[0]);
-
 		In in = new In(
-		// "/home/hellow/workspaceJava/Algorithms_testFiles/Pazzle/puzzle16.txt");
+		 "/home/hellow/workspaceJava/Algorithms_testFiles/Pazzle/puzzle00.txt");
 		// In in = new In(
-				"/home/kokoko/workspace/Algorithms_sendfiles/puzzleTestFiles/puzzle34.txt");
+//				"/home/kokoko/workspace/Algorithms_sendfiles/puzzleTestFiles/puzzle34.txt");
 		// puzzle2x2-unsolvable1.txt puzzle03.txt puzzle3x3-unsolvable1.txt
 
 		int N = in.readInt();
