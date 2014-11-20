@@ -1,5 +1,8 @@
 package week5;
 
+import com.algorithms.Point2D;
+import com.algorithms.StdDraw;
+
 /*************************************************************************
  *  Compilation:  javac KdTreeVisualizer.java
  *  Execution:    java KdTreeVisualizer
