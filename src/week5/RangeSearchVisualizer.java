@@ -4,7 +4,6 @@ import com.algorithms.In;
 import com.algorithms.Point2D;
 import com.algorithms.StdDraw;
 
-
 /*************************************************************************
  *  Compilation:  javac RangeSearchVisualizer.java
  *  Execution:    java RangeSearchVisualizer input.txt
