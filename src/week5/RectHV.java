@@ -3,6 +3,7 @@ package week5;
 import com.algorithms.Point2D;
 import com.algorithms.StdDraw;
 
+
 /*************************************************************************
  *  Compilation:  javac RectHV.java
  *  Execution:    java RectHV

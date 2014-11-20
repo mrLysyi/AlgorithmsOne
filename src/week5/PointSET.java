@@ -10,7 +10,6 @@ import com.algorithms.StdDraw;
 
 public class PointSET {
 	private SET<Point2D> pSet;
-
 	public PointSET() {
 		pSet = new SET<Point2D>();
 	} // construct an empty set of points

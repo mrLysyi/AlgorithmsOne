@@ -8,6 +8,7 @@ import com.algorithms.StdDraw;
 public class KdTree {
 	private Node first;
 	private int count = 0;
+	
 	private Stack<Point2D> range = new Stack<Point2D>();
 
 	private static class Node {
