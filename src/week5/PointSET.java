@@ -20,7 +20,7 @@ public class PointSET {
 	}// is the set empty?
 
 	public int size() {
-//		pSet.ceiling(key)
+		// pSet.ceiling(key)
 		return pSet.size();
 	} // number of points in the set
 
@@ -58,24 +58,28 @@ public class PointSET {
 	} // all points that are inside the rectangle
 
 	public Point2D nearest(Point2D that) {
-		if (pSet.isEmpty() )
+		if (pSet.isEmpty())
 			return null;
-		Point2D rezult, larger, smaller;
-		try {
-			smaller = pSet.ceiling(that);	
-		}catch (Exception e) {
-//			smaller = that;
-			return pSet.floor(that);
-		}		
-		try {
-			larger = pSet.floor(that);			
-		} catch (Exception e) {
-//			larger = that;
-			return pSet.ceiling(that);
-		  }		
-		if(that.distanceTo(larger) < that.distanceTo(smaller))
-			rezult = larger;
-		else rezult = smaller;
+		Point2D rezult = null, larger, smaller, p;
+		Double distanse = 0.0, prDistanse = 0.0;
+		Iterator<Point2D> iterator = pSet.iterator();
+
+		boolean first = true;
+		while (iterator.hasNext()) {
+			p = iterator.next();
+			distanse = p.distanceTo(that);
+			if (!first) {
+				if (distanse <= prDistanse) {
+					rezult = p;
+					prDistanse = distanse;
+				}				
+			} else {
+				prDistanse = distanse;
+				rezult = p;
+				first = false;
+			}			
+		}
+		
 		return rezult;
 
 	} // a nearest neighbor in the set to point p; null if the set is empty
